@@ -38,10 +38,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Put pixels where they belong
         // todo: make this more better by using FOP
         let (x, y) = ((x * 2) as u32, (y * 2) as u32);
-        converted_img.put_pixel(x, y, expansion.1);
-        converted_img.put_pixel(x + 1, y, expansion.0);
-        converted_img.put_pixel(x, y + 1, expansion.3);
-        converted_img.put_pixel(x + 1, y + 1, expansion.2);
+        converted_img.put_pixel(x, y, expansion.2);
+        converted_img.put_pixel(x + 1, y, expansion.3);
+        converted_img.put_pixel(x, y + 1, expansion.0);
+        converted_img.put_pixel(x + 1, y + 1, expansion.1);
     }
     _ = converted_img.save(r#"src/tests/images/tilemap_color_converted.png"#);
     Ok(())
