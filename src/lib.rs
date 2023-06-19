@@ -1,10 +1,7 @@
 #![allow(non_snake_case)]
 use image::{DynamicImage, GenericImage, GenericImageView, Rgba};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    use image::io::Reader as ImageReader;
-
-    let img = ImageReader::open(r#"src/tests/images/pbobbl2n-1s.png"#)?.decode()?;
+pub fn convert(img: DynamicImage) -> DynamicImage {
     let mut converted_img = DynamicImage::new_rgb8(img.width() * 2, img.height() * 2);
 
     img.pixels()
@@ -49,8 +46,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             converted_img.put_pixel(x, y, expansion.2);
             converted_img.put_pixel(x + 1, y, expansion.3);
         });
-    _ = converted_img.save(r#"src/tests/images/converted.png"#);
-    Ok(())
+
+    converted_img
 }
 
 //   ┌─────┐     ┌──┬──┐
