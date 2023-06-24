@@ -3,34 +3,57 @@ use image::{DynamicImage, GenericImage, GenericImageView, Rgba};
 mod algorithms;
 
 pub fn convert(img: DynamicImage) -> DynamicImage {
-    let mut converted_img = DynamicImage::new_rgb8(img.width() * 2, img.height() * 2);
-
+    // do the filter
     let pixels = img.pixels();
-    let expansions = pixels.map(|(x, y, px)| (x, y, crate::algorithms::scale_2x(x, y, px, &img)));
+    let expansions = pixels.map(|(x, y, px)| (crate::algorithms::scale_2x(x, y, px, &img)));
 
-    for (x, y, expansion) in expansions {
-        // Put the resulting pixels where they belong
-        let (x, y) = (x * 2, y * 2);
-        converted_img.put_pixel(x, y + 1, expansion.0);
-        converted_img.put_pixel(x + 1, y + 1, expansion.1);
-        converted_img.put_pixel(x, y, expansion.2);
-        converted_img.put_pixel(x + 1, y, expansion.3);
+    // put the pixels into the result image
+    let expansion_size: u32 = 2; // todo: don't hardcode this
+    let mut converted_img =
+        DynamicImage::new_rgb8(img.width() * expansion_size, img.height() * expansion_size);
+    for expansion in expansions {
+        expansion.put_into_image(&mut converted_img);
     }
 
     converted_img
 }
 
+// the filter expands a pixel in an image into more pixels -> this struct
 //   ┌─────┐     ┌──┬──┐
 //   │     │     │0 │1 │
 //   │pixel├────►├──┼──┤
 //   │     │     │2 │3 │
 //   └─────┘     └──┴──┘
-// todo: better way to define this?
-pub struct PixelExpansion(Rgba<u8>, Rgba<u8>, Rgba<u8>, Rgba<u8>);
+pub struct PixelExpansion {
+    size: u8,
+    pub pixels: Vec<Rgba<u8>>,
+    original_coords: (u32, u32), // (x, y) of point which is being expanded
+}
 
 impl PixelExpansion {
-    fn new(px_color: Rgba<u8>) -> Self {
-        PixelExpansion(px_color, px_color, px_color, px_color)
+    pub fn new(size: u8, px_color: Rgba<u8>, original_coords: (u32, u32)) -> Self {
+        PixelExpansion {
+            size,
+            pixels: vec![px_color; size as usize * size as usize],
+            original_coords,
+        }
+    }
+
+    // puts the pixel expansion into the Image, assuming it's the correct size
+    // sorry for it being a mess
+    // also idk how to make it accept a generic image
+    pub fn put_into_image(&self, img: &mut DynamicImage) {
+        let (x, y) = self.original_coords;
+        for row in 0..self.size {
+            for column in 0..self.size {
+                let pixel = self.pixels[(self.size * row + column) as usize];
+
+                let x = x * self.size as u32 + column as u32;
+                // y coords get flipped, hence the (self.size - 1 - row)
+                let y = y * self.size as u32 + (self.size - 1 - row) as u32;
+                img.put_pixel(x, y, pixel);
+            }
+        }
     }
 }
 
