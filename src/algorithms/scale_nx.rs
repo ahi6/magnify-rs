@@ -66,7 +66,7 @@ pub fn scale_3x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpans
         if (H == D && H != F && D != B && px != A) || (D == B && D != H && B != F && px != G) {
             expansion.pixels[3] = D;
         }
-        // 4=E implicitly
+        // expansion.pixels[4] is already equal to px
         if (B == F && B != D && F != H && px != I) || (F == H && F != B && H != D && px != C) {
             expansion.pixels[5] = F;
         }
