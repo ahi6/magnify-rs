@@ -7,12 +7,16 @@ pub fn convert(img: DynamicImage, algorithm: algorithms::Algorithm) -> DynamicIm
     // do the filter
     let algorithm_fn = match algorithm {
         // this function will get executed to expand the image
-        algorithms::Algorithm::Scale2X => algorithms::scale_2x,
-        algorithms::Algorithm::Scale3X => algorithms::scale_3x,
+        Algorithm::Scale2X => algorithms::scale_2x,
+        Algorithm::Scale3X => algorithms::scale_3x,
+        Algorithm::Eagle => algorithms::eagle,
     };
     let expansion_size: u32 = match algorithm {
-        algorithms::Algorithm::Scale2X => 2,
-        algorithms::Algorithm::Scale3X => 3,
+        // 2x2 algorithms
+        Algorithm::Scale2X => 2,
+        Algorithm::Eagle => 2,
+        // 3x3 algorithms
+        Algorithm::Scale3X => 3,
     };
 
     let pixels = img.pixels();
@@ -28,21 +32,6 @@ pub fn convert(img: DynamicImage, algorithm: algorithms::Algorithm) -> DynamicIm
     converted_img
 }
 
-// pub fn convert(img: DynamicImage) -> DynamicImage {
-//     // do the filter
-//     let pixels = img.pixels();
-//     let expansions = pixels.map(|(x, y, px)| (crate::algorithms::scale_2x(x, y, px, &img)));
-
-//     // put the pixels into the result image
-//     let expansion_size: u32 = 2; // todo: don't hardcode this
-//     let mut converted_img =
-//         DynamicImage::new_rgb8(img.width() * expansion_size, img.height() * expansion_size);
-//     for expansion in expansions {
-//         expansion.put_into_image(&mut converted_img);
-//     }
-
-//     converted_img
-// }
 // the filter expands a pixel in an image into more pixels -> this struct
 //   ┌─────┐     ┌──┬──┐
 //   │     │     │0 │1 │
