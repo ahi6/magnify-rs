@@ -5,18 +5,28 @@ pub use algorithms::Algorithm;
 
 pub fn convert(img: DynamicImage, algorithm: algorithms::Algorithm) -> DynamicImage {
     // do the filter
-    let algorithm_fn = match algorithm {
-        // this function will get executed to expand the image
-        Algorithm::Scale2X => algorithms::scale_2x,
-        Algorithm::Scale3X => algorithms::scale_3x,
-        Algorithm::Eagle => algorithms::eagle,
-    };
+
+    // choose the algorithm to use to expand the image
+    // it's a boxed closure so I can pass the size to the arbitrary-size algorithm(s)
+    // TODO: determine if this is worth it
+    let algorithm_fn: Box<dyn Fn(u32, u32, Rgba<u8>, &DynamicImage) -> PixelExpansion> =
+        match algorithm {
+            Algorithm::Scale2X => Box::new(algorithms::scale_2x),
+            Algorithm::Eagle => Box::new(algorithms::eagle),
+            Algorithm::Scale3X => Box::new(algorithms::scale_3x),
+            // Arbitrary-sized
+            Algorithm::NearestNeighbor { size } => Box::new(move |x, y, px, img: &DynamicImage| {
+                algorithms::nearest_neighbor(size, x, y, px, &img)
+            }),
+        };
     let expansion_size: u32 = match algorithm {
         // 2x2 algorithms
         Algorithm::Scale2X => 2,
         Algorithm::Eagle => 2,
         // 3x3 algorithms
         Algorithm::Scale3X => 3,
+        // Arbitrary-size algorithms
+        Algorithm::NearestNeighbor { size } => size,
     };
 
     let pixels = img.pixels();
