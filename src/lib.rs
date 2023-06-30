@@ -8,7 +8,7 @@ pub fn convert(img: DynamicImage, algorithm: algorithms::Algorithm) -> DynamicIm
 
     // choose the algorithm to use to expand the image
     // it's a boxed closure so I can pass the size to the arbitrary-size algorithm(s)
-    // TODO: determine if this is worth it
+    // this might be over-engineered
     let algorithm_fn: Box<dyn Fn(u32, u32, Rgba<u8>, &DynamicImage) -> PixelExpansion> =
         match algorithm {
             Algorithm::Scale2X => Box::new(algorithms::scale_2x),
