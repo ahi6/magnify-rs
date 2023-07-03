@@ -1,9 +1,11 @@
 [package]
 name = "magnify"
+authors = ["ahi6"]
 version = "0.1.0"
 edition = "2021"
 license = "EUPL-1.2"
-keywords = ["pixel-art", "graphics"]
+description = "Simple pixel-art scaling algorithms"
+keywords = ["pixel-art", "graphics", "scale2x"]
 categories = ["multimedia::images"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
