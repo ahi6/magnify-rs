@@ -7,6 +7,7 @@ license = "EUPL-1.2"
 description = "Simple pixel-art scaling algorithms"
 keywords = ["pixel-art", "graphics", "scale2x"]
 categories = ["multimedia::images"]
+repository = "https://github.com/ahi6/magnify-rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
