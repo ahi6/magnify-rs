@@ -1,7 +1,7 @@
 use crate::*;
 use image::Rgba;
 
-pub fn eagle(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpansion {
+pub(crate) fn eagle(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpansion {
     let mut expansion = PixelExpansion::new(2, px, (x, y));
     {
         let (x, y) = (x as i32, y as i32);

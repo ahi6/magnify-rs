@@ -48,7 +48,7 @@ pub fn convert(img: DynamicImage, algorithm: algorithms::Algorithm) -> DynamicIm
 //   │pixel├────►├──┼──┤
 //   │     │     │2 │3 │
 //   └─────┘     └──┴──┘
-pub struct PixelExpansion {
+pub(crate) struct PixelExpansion {
     size: u8,
     pub pixels: Vec<Rgba<u8>>,
     original_coords: (u32, u32), // (x, y) of point which is being expanded
@@ -79,7 +79,7 @@ impl PixelExpansion {
     }
 }
 
-pub fn get_pixel_or_nearest(x: i32, y: i32, img: &DynamicImage) -> Rgba<u8> {
+pub(crate) fn get_pixel_or_nearest(x: i32, y: i32, img: &DynamicImage) -> Rgba<u8> {
     let bounds = img.bounds(); // x, y, width, height
     let mut coords: (u32, u32) = (0, 0);
 

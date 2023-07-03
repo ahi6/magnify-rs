@@ -1,7 +1,7 @@
 use crate::*;
 use image::Rgba;
 
-pub fn scale_2x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpansion {
+pub(crate) fn scale_2x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpansion {
     let mut expansion = PixelExpansion::new(2, px, (x, y));
     {
         let (x, y) = (x as i32, y as i32);
@@ -34,7 +34,7 @@ pub fn scale_2x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpans
     expansion
 }
 
-pub fn scale_3x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpansion {
+pub(crate) fn scale_3x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelExpansion {
     let mut expansion = PixelExpansion::new(3, px, (x, y));
     {
         let (x, y) = (x as i32, y as i32);

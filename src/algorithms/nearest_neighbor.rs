@@ -1,7 +1,7 @@
 use crate::*;
 use image::Rgba;
 
-pub fn nearest_neighbor(
+pub(crate) fn nearest_neighbor(
     size: u32,
     x: u32,
     y: u32,
