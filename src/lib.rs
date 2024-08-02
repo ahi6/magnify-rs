@@ -77,23 +77,23 @@ impl PixelExpansion {
 }
 
 pub(crate) fn get_pixel_or_nearest(x: i32, y: i32, img: &DynamicImage) -> Rgba<u8> {
-    let bounds = img.bounds(); // x, y, width, height
+    let (sub_w, sub_h) = img.dimensions();
     let mut coords: (u32, u32) = (0, 0);
 
     // make sure x is within bounds
-    if x < bounds.0 as i32 {
-        coords.0 = bounds.0;
-    } else if x >= bounds.2 as i32 {
-        coords.0 = bounds.2 - 1;
+    if x < 0 as i32 {
+        coords.0 = 0;
+    } else if x >= sub_w as i32 {
+        coords.0 = sub_w - 1;
     } else {
         coords.0 = x as u32;
     };
 
     // make sure y is within bounds
-    if y < bounds.1 as i32 {
-        coords.1 = bounds.1;
-    } else if y >= bounds.3 as i32 {
-        coords.1 = bounds.3 - 1;
+    if y < 0 as i32 {
+        coords.1 = 0;
+    } else if y >= sub_h as i32 {
+        coords.1 = sub_h - 1;
     } else {
         coords.1 = y as u32;
     }
