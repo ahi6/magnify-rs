@@ -9,7 +9,7 @@ This is a rust library implementing some simple [Pixel-art scaling algorithms](h
 ## Example
 This code scales `image.bmp` using the Scale3X algorithms and then saves the result into `converted.bmp`. 
 ```rs
-use image::io::Reader as ImageReader;
+use image::ImageReader;
 use magnify::Algorithm;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -20,4 +20,5 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
 ```
