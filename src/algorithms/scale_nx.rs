@@ -12,10 +12,10 @@ pub(crate) fn scale_2x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> Pixe
         // ├──┼──┼──┤
         // │  │D │  │
         // └──┴──┴──┘
-        let A = get_pixel_or_nearest(x, y + 1, &img);
-        let B = get_pixel_or_nearest(x + 1, y, &img);
-        let C = get_pixel_or_nearest(x - 1, y, &img);
-        let D = get_pixel_or_nearest(x, y - 1, &img);
+        let A = get_pixel_or_nearest(x, y + 1, img);
+        let B = get_pixel_or_nearest(x + 1, y, img);
+        let C = get_pixel_or_nearest(x - 1, y, img);
+        let D = get_pixel_or_nearest(x, y - 1, img);
 
         if C == A && C != D && A != B {
             expansion.pixels[0] = A;
@@ -45,14 +45,14 @@ pub(crate) fn scale_3x(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> Pixe
         // ├──┼──┼──┤
         // │G │H │I │
         // └──┴──┴──┘
-        let A = get_pixel_or_nearest(x - 1, y + 1, &img);
-        let B = get_pixel_or_nearest(x, y + 1, &img);
-        let C = get_pixel_or_nearest(x + 1, y + 1, &img);
-        let D = get_pixel_or_nearest(x - 1, y, &img);
-        let F = get_pixel_or_nearest(x + 1, y, &img);
-        let G = get_pixel_or_nearest(x - 1, y - 1, &img);
-        let H = get_pixel_or_nearest(x, y - 1, &img);
-        let I = get_pixel_or_nearest(x + 1, y - 1, &img);
+        let A = get_pixel_or_nearest(x - 1, y + 1, img);
+        let B = get_pixel_or_nearest(x, y + 1, img);
+        let C = get_pixel_or_nearest(x + 1, y + 1, img);
+        let D = get_pixel_or_nearest(x - 1, y, img);
+        let F = get_pixel_or_nearest(x + 1, y, img);
+        let G = get_pixel_or_nearest(x - 1, y - 1, img);
+        let H = get_pixel_or_nearest(x, y - 1, img);
+        let I = get_pixel_or_nearest(x + 1, y - 1, img);
 
         if D == B && D != H && B != F {
             expansion.pixels[0] = D;

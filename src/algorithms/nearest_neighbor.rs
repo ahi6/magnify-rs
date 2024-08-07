@@ -8,6 +8,5 @@ pub(crate) fn nearest_neighbor(
     px: Rgba<u8>,
     _img: &DynamicImage,
 ) -> PixelExpansion {
-    let expansion = PixelExpansion::new(size as u8, px, (x, y));
-    expansion
+    PixelExpansion::new(size as u8, px, (x, y))
 }

@@ -13,7 +13,7 @@ pub fn convert(img: DynamicImage, algorithm: algorithms::Algorithm) -> DynamicIm
             Algorithm::Scale3X => Box::new(algorithms::scale_3x),
             // Arbitrary-sized
             Algorithm::NearestNeighbor { size } => Box::new(move |x, y, px, img: &DynamicImage| {
-                algorithms::nearest_neighbor(size, x, y, px, &img)
+                algorithms::nearest_neighbor(size, x, y, px, img)
             }),
         };
     let expansion_size: u32 = match algorithm {
@@ -81,7 +81,7 @@ pub(crate) fn get_pixel_or_nearest(x: i32, y: i32, img: &DynamicImage) -> Rgba<u
     let mut coords: (u32, u32) = (0, 0);
 
     // make sure x is within bounds
-    if x < 0 as i32 {
+    if x < 0 {
         coords.0 = 0;
     } else if x >= sub_w as i32 {
         coords.0 = sub_w - 1;
@@ -90,7 +90,7 @@ pub(crate) fn get_pixel_or_nearest(x: i32, y: i32, img: &DynamicImage) -> Rgba<u
     };
 
     // make sure y is within bounds
-    if y < 0 as i32 {
+    if y < 0 {
         coords.1 = 0;
     } else if y >= sub_h as i32 {
         coords.1 = sub_h - 1;

@@ -12,14 +12,14 @@ pub(crate) fn eagle(x: u32, y: u32, px: Rgba<u8>, img: &DynamicImage) -> PixelEx
         // ├──┼──┼──┤
         // │G │H │I │
         // └──┴──┴──┘
-        let A = get_pixel_or_nearest(x - 1, y + 1, &img);
-        let B = get_pixel_or_nearest(x, y + 1, &img);
-        let C = get_pixel_or_nearest(x + 1, y + 1, &img);
-        let D = get_pixel_or_nearest(x - 1, y, &img);
-        let F = get_pixel_or_nearest(x + 1, y, &img);
-        let G = get_pixel_or_nearest(x - 1, y - 1, &img);
-        let H = get_pixel_or_nearest(x, y - 1, &img);
-        let I = get_pixel_or_nearest(x + 1, y - 1, &img);
+        let A = get_pixel_or_nearest(x - 1, y + 1, img);
+        let B = get_pixel_or_nearest(x, y + 1, img);
+        let C = get_pixel_or_nearest(x + 1, y + 1, img);
+        let D = get_pixel_or_nearest(x - 1, y, img);
+        let F = get_pixel_or_nearest(x + 1, y, img);
+        let G = get_pixel_or_nearest(x - 1, y - 1, img);
+        let H = get_pixel_or_nearest(x, y - 1, img);
+        let I = get_pixel_or_nearest(x + 1, y - 1, img);
 
         if A == B && B == D {
             // top left
